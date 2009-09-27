@@ -1,0 +1,41 @@
+#!/usr/bin/perl -w
+use strict;
+# If the size of the SD card $MAX_SIZE is exeeded move the oldest files to
+# the archive $ARCHIVE_DIR. The $PC_DIR results in beeing smaller then $MAX_SIZE
+
+my $MAX_SIZE;
+if (defined $ARGV[0]) {
+	$MAX_SIZE = $ARGV[0];
+} else {
+	print "usage: $0 <MAX_SIZE>\n";
+	exit 2;
+}
+
+my $ARCHIVE_DIR="/mnt/mp3s/g1.archive";
+my $PC_DIR="/mnt/mp3s/g1";
+
+$_=`du -sk $PC_DIR`;
+/^(\d+).+/;
+my $curSize=$1;
+
+if($curSize > $MAX_SIZE) {
+	print "moving files to archive $ARCHIVE_DIR\n";
+	open(OLDFILES, "find $PC_DIR -type f -printf ". '"%C@ %k %p\n"|sort|') or die("Can't find old files");
+	while(<OLDFILES>) {
+		/.+ (\d+) (.+)$/;
+		my $size = $1;
+		my $file = $2;
+		$curSize = $curSize - $size;
+		print "$size $file\n";
+		
+		$file =~ /$PC_DIR\/(.+)\/[^\/]*$/;
+		my $dir = $1;
+
+		system("mkdir", "-p", "$ARCHIVE_DIR/$dir") and die("Can't create directory $ARCHIVE_DIR/$dir");
+		system("mv", "$file", "$ARCHIVE_DIR/$dir/") and die("Can't move file $file to $ARCHIVE_DIR/$dir");
+		
+		if($curSize < $MAX_SIZE) {
+			last;
+		}
+	}
+}

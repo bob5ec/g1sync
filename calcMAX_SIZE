@@ -1,0 +1,16 @@
+#!/usr/bin/perl -w
+use strict;
+my $PC_DIR="/mnt/mp3s/g1";
+my $MOBILE_DIR="/mnt/g1/music/sync";
+my $KEEP_FREE="100000";
+
+$_ = `df -k $MOBILE_DIR | tail -n1`;
+/\s\d+\s+\d+\s+(\d+)\s/;
+my $free = $1;
+
+$_ = `du -sk $MOBILE_DIR`;
+/^(\d+)[^\d]/;
+my $mobileSize = $1;
+
+#print "$free + $mobileSize - $KEEP_FREE\n";
+print $free + $mobileSize - $KEEP_FREE;

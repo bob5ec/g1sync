@@ -1,0 +1,43 @@
+#!/usr/bin/perl -w
+use strict;
+my $PC_DIR="/mnt/mp3s/g1";
+my $MOBILE_DIR="/mnt/g1/music/sync";
+#my $SYNC="$PC_DIR/sync";
+my $PLS_DIR="/mnt/g1/music/sync.m3u";
+my $FROM_PLS_TO_MOBILE_DIR="../sync/";
+
+my $FILETYPES="-name *.mp3 -or -name *.m4a -or -name *.mp4";
+
+# find old files
+open(MOBILE, "cd $MOBILE_DIR; find -type f $FILETYPES |") or die("Can't read $MOBILE_DIR");
+
+my %onMOBILE;
+while(<MOBILE>) {
+	$onMOBILE{$_}++;
+}
+close(MOBILE);
+
+# find new files
+open(PC, "cd $PC_DIR; find -type f $FILETYPES |") or die("Can't read $PC_DIR");
+
+# generate m3u filename
+my ($sec,$min,$hour,$mday,$mon,$year,$wday,
+$yday,$isdst)=localtime(time);
+my $date_string=sprintf "%4d-%02d-%02d_%02d.%02d.%02d", $year+1900,$mon+1,$mday,$hour,$min,$sec;
+my $pls="$PLS_DIR/$date_string.m3u";
+
+
+open(M3U, ">$pls") or die("Can't write to $pls");
+
+# write m3u file
+while(<PC>) {
+	if(! $onMOBILE{$_}) {
+		/\.\/(.+)*$/;
+		$_ = $1;
+		print M3U $FROM_PLS_TO_MOBILE_DIR . $_ . "\n";
+	}
+}
+
+close(M3U);
+
+#system("cp", $pls, "$PLS_DIR/last.m3u") and die("Can't coppy $pls to $PLS_DIR/last.m3u");

@@ -1,0 +1,12 @@
+#!/bin/bash
+PC_DIR=/mnt/mp3s/g1
+MOBILE_DIR=/mnt/g1/music/sync
+MYHOME=/usr/local/lib/g1sync
+
+if [ ! "$1" = "-o" ]; then
+	hpodder
+fi
+
+MAX_SIZE=`$MYHOME/calcMAX_SIZE`
+#DEBUG $MYHOME/moveOld $MAX_SIZE && $MYHOME/createM3u && rsync -nvrt --modify-window=1 --delete $PC_DIR/ $MOBILE_DIR/
+$MYHOME/moveOld $MAX_SIZE && $MYHOME/createM3u && rsync -vrt --modify-window=1 --delete $PC_DIR/ $MOBILE_DIR/
