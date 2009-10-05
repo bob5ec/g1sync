@@ -1,0 +1,25 @@
+
+                                     g1sync
+
+g1sync is a tool for synchronizing your newest podcast to your Android phone
+(or any othe mobile music player).
+g1sync does three things:
+ 1. Start hpodder for catching your latest podcasts.
+ 2. Check if all your podcasts fit on your mobile device.
+ 2a. If not move the oldest podcasts to the archive which is not synced.
+ 3. Create a playlist for quick access of the newest podcasts.
+ 4. (not to be forgotten) sync the music to the mobile device.
+
+###########
+# Install #
+###########
+
+Check all files for UPPERCASE VARIABLES at the top, these are the settings.
+
+
+#############
+# Changelog #
+#############
+
+Version 0.1 2009-10-05
+First release.

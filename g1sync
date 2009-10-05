@@ -1,6 +1,24 @@
 #!/bin/bash
+# This file is part of g1sync.
+#
+# g1sync is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# g1sync is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You can download a copy of the GNU General Public License from
+# <http://www.gnu.org/licenses/>.
+
+# music directory on the pc
 PC_DIR=/mnt/mp3s/g1
+# music directory on the mobile device
 MOBILE_DIR=/mnt/g1/music/sync
+# directory where the g1sync scrips are located
 MYHOME=/usr/local/lib/g1sync
 
 if [ ! "$1" = "-o" ]; then

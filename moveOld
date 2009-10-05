@@ -1,5 +1,27 @@
 #!/usr/bin/perl -w
+# This file is part of g1sync.
+#
+# g1sync is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# g1sync is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You can download a copy of the GNU General Public License from
+# <http://www.gnu.org/licenses/>.
+
 use strict;
+
+# music directory on the pc
+my $PC_DIR="/mnt/mp3s/g1";
+# directory where old podcasts are moved to if they do not fit on the mobile device
+my $ARCHIVE_DIR="/mnt/mp3s/g1.archive";
+
+
 # If the size of the SD card $MAX_SIZE is exeeded move the oldest files to
 # the archive $ARCHIVE_DIR. The $PC_DIR results in beeing smaller then $MAX_SIZE
 
@@ -11,8 +33,6 @@ if (defined $ARGV[0]) {
 	exit 2;
 }
 
-my $ARCHIVE_DIR="/mnt/mp3s/g1.archive";
-my $PC_DIR="/mnt/mp3s/g1";
 
 $_=`du -sk $PC_DIR`;
 /^(\d+).+/;
