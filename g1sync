@@ -25,6 +25,14 @@ if [ ! "$1" = "-o" ]; then
 	hpodder
 fi
 
+if [ ! "$?" = "0" ]; then
+	exit
+fi
+
 MAX_SIZE=`$MYHOME/calcMAX_SIZE`
+if [ "$MAX_SIZE" = "-1" ]; then
+	exit
+fi
+
 #DEBUG $MYHOME/moveOld $MAX_SIZE && $MYHOME/createM3u && rsync -nvrt --modify-window=1 --delete $PC_DIR/ $MOBILE_DIR/
 $MYHOME/moveOld $MAX_SIZE && $MYHOME/createM3u && rsync -vrt --modify-window=1 --delete $PC_DIR/ $MOBILE_DIR/

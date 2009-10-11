@@ -22,11 +22,11 @@ my $MOBILE_DIR="/mnt/g1/music/sync";
 # Kilobytes to KEEP_FREE on mobile device
 my $KEEP_FREE="100000";
 
-$_ = `df -k $MOBILE_DIR | tail -n1`;
+$_ = `df -k $MOBILE_DIR | tail -n1` or print -1 and die("can not access $MOBILE_DIR");
 /\s\d+\s+\d+\s+(\d+)\s/;
 my $free = $1;
 
-$_ = `du -sk $MOBILE_DIR`;
+$_ = `du -sk $MOBILE_DIR` or print -1 and die("can not access $MOBILE_DIR");
 /^(\d+)[^\d]/;
 my $mobileSize = $1;
 
