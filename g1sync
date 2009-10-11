@@ -18,8 +18,18 @@
 PC_DIR=/mnt/mp3s/g1
 # music directory on the mobile device
 MOBILE_DIR=/mnt/g1/music/sync
+# mount point of the mobile device
+MOBILE_MOUNT_POINT=/mnt/g1
 # directory where the g1sync scrips are located
 MYHOME=/usr/local/lib/g1sync
+
+
+# check if device is mounted
+mount | grep $MOBILE_MOUNT_POINT > /dev/null
+if [ ! "$?" = "0" ]; then
+	echo mobile device is not mounted
+	exit
+fi
 
 if [ ! "$1" = "-o" ]; then
 	hpodder
