@@ -42,7 +42,7 @@ if($curSize > $MAX_SIZE) {
 	print "moving files to archive $ARCHIVE_DIR\n";
 	open(OLDFILES, "find $PC_DIR -type f -printf ". '"%C@ %k %p\n"|sort|') or die("Can't find old files");
 	while(<OLDFILES>) {
-		/.+ (\d+) (.+)$/;
+		/^\d+\.\d+ (\d+) (.+)$/;
 		my $size = $1;
 		my $file = $2;
 		$curSize = $curSize - $size;
@@ -51,8 +51,8 @@ if($curSize > $MAX_SIZE) {
 		$file =~ /$PC_DIR\/(.+)\/[^\/]*$/;
 		my $dir = $1;
 
-		system("mkdir", "-p", "$ARCHIVE_DIR/$dir") and die("Can't create directory $ARCHIVE_DIR/$dir");
-		system("mv", "$file", "$ARCHIVE_DIR/$dir/") and die("Can't move file $file to $ARCHIVE_DIR/$dir");
+		system('mkdir', '-p', $ARCHIVE_DIR.'/'.$dir) and die("Can't create directory $ARCHIVE_DIR/$dir");
+		system('mv', $file, $ARCHIVE_DIR.'/'.$dir.'/') and die("Can't move file $file to $ARCHIVE_DIR/$dir");
 		
 		if($curSize < $MAX_SIZE) {
 			last;
